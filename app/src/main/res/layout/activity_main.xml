@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!--
+    Кнопка! Из примечательного только атрибут id, который необходим для взаимодействия с ней
+    в коде (см. MainActivity)
+    -->
+
+        <Button
+            android:id="@+id/laba1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="laba1" />
+
+        <Button
+            android:id="@+id/lab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lab2" />
+
+        <Button
+            android:id="@+id/lab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lab3" />
+
+        <Button
+            android:id="@+id/lab4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lab4" />
+
+        <Button
+            android:id="@+id/lab5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lab5" />
+
+        <Button
+            android:id="@+id/lab6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lab6" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
