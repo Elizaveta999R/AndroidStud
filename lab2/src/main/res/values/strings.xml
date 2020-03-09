@@ -1,1 +1,3 @@
-<resources><string name="lab2_title">I\'m %s!</string></resources>
+<resources><string name="lab2_title">I\'m %s!</string>
+    <string name="lab2_btn_add_view">Add</string>
+</resources>
