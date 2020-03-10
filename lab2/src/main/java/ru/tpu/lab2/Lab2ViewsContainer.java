@@ -1,6 +1,8 @@
 package ru.tpu.lab2;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -52,6 +54,8 @@ public class Lab2ViewsContainer extends LinearLayout {
     private String RI;
     private int Rt;
     Map<Integer, Integer> states = new HashMap<Integer, Integer>();
+    ArrayList<String> title = new ArrayList<String>();
+    List<Double> reit = new ArrayList<Double>();
 
 
  /*   List<LinearLayout> LLL= new ArrayList<LinearLayout>();
@@ -95,20 +99,23 @@ public class Lab2ViewsContainer extends LinearLayout {
 
         // Полученный TypedArray необходимо обязательно очистить.
         a.recycle();
+        ArrayList<String> list11 = new ArrayList<String>();
+   if(viewsCount<minViewsCount)
+   {
+        for (int i = 0; i <  minViewsCount ; i++) {
+            incrementViews("Показатель", 7.3);
+        }
+          /*  list11.add("Показатель");
+           list11.add("7.8");*/
+        }
 
-        setViewsCount(minViewsCount);
+title.clear();
+       /* setViewsCount(list11);*/
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void incrementViews(String OOO, Double PPP) {
-
-
-        LinearLayout.LayoutParams lParams1;
-        LinearLayout.LayoutParams lParams2;
-        LinearLayout.LayoutParams lParams3;
-
-     /*   name = findViewById(R.id.edittext1);
-        lastName = findViewById(R.id.edittext2);*/
+        viewsCount++;
         PI =OOO;
         RI = PPP.toString();
 
@@ -120,7 +127,8 @@ public class Lab2ViewsContainer extends LinearLayout {
         linearLayout1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         linearLayout1.setId(CC++);
 
-// Зададим цвета для фона и самого индикатора
+
+/*// Зададим цвета для фона и самого индикатора
         Drawable background = new ColorDrawable(0xFF373737);
         Drawable progress = new ColorDrawable(0xFF00B51C);
         ClipDrawable clipProgress = new ClipDrawable(progress, Gravity.LEFT,
@@ -130,7 +138,7 @@ public class Lab2ViewsContainer extends LinearLayout {
         LayerDrawable layerlist = new LayerDrawable(new Drawable[] {
                 background, clipProgress });
         layerlist.setId(0, android.R.id.background);
-        layerlist.setId(1, android.R.id.progress);
+        layerlist.setId(1, android.R.id.progress);*/
 
         ProgressBar progressBar = new ProgressBar(getContext(), null,
                 android.R.attr.progressBarStyleHorizontal);
@@ -139,11 +147,16 @@ public class Lab2ViewsContainer extends LinearLayout {
         states.put(linearLayout1.getId(), tempI);
 
 
+        title.add(OOO);
+        title.add(PPP.toString());
+
+
         //SortedSet<Integer> values = new TreeSet<Integer>(states.values());
        // states.entrySet().stream().sorted((n1,n2)->n1.getValue().compareTo(n2.getValue())).forEach(n->System.out.println(n));
 
 
-        progressBar.setProgressDrawable(layerlist);
+     /*   progressBar.setProgressDrawable(layerlist);*/
+        progressBar.setProgressTintList(ColorStateList.valueOf(Color.BLACK));
         progressBar.setProgress(tempI);
 
 
@@ -151,16 +164,17 @@ public class Lab2ViewsContainer extends LinearLayout {
         TextView textView1 = new TextView(getContext());
         textView1.setTextSize(16);
         textView1.setText(OOO);
-       // textView1.setId(viewsCount++);
+
 
 
         TextView textView3 = new TextView(getContext());
         textView3.setTextSize(16);
-        textView3.setText(RI)
-        ;
+        textView3.setText(RI);
         LayoutParams poi = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,2.0f);
         LayoutParams poi2 = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,2.0f);
         LayoutParams poi3 = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,1.0f);
+        poi3.leftMargin = 70;
+
         textView1.setLayoutParams(poi);
          progressBar.setLayoutParams(poi2);
         textView3.setLayoutParams(poi3);
@@ -189,8 +203,6 @@ public class Lab2ViewsContainer extends LinearLayout {
 
               }
             }
-
-
         }
 
 
@@ -202,23 +214,26 @@ public class Lab2ViewsContainer extends LinearLayout {
 
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void setViewsCount(int viewsCount) {
-        if (this.viewsCount == viewsCount) {
+   /* @RequiresApi(api = Build.VERSION_CODES.N)
+
+    public void setViewsCount(ArrayList <String> nnn) {
+       int Vk = nnn.size()/2;
+
+        if (this.viewsCount == Vk) {
             return;
         }
-        viewsCount = viewsCount < minViewsCount ? minViewsCount : viewsCount;
+    Vk = Vk < minViewsCount ? minViewsCount : Vk;
 
         removeAllViews();
         this.viewsCount = 0;
 
-        for (int i = 0; i < viewsCount; i++) {
-            incrementViews("jjj",(7.1+(double)prov1++) );
+        for (int i = 0; i < Vk*2; i=i+2) {
+            incrementViews(nnn.get(i), Double.parseDouble(nnn.get(i+1)));
         }
     }
-
-    public int getViewsCount() {
-        return viewsCount;
+*/
+    public ArrayList<String> getViewsCount() {
+        return title;
     }
 
     /**

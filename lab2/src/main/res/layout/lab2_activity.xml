@@ -15,6 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="23dp"
         android:ems="10"
+        android:hint="Показатель"
         android:inputType="textPersonName" />
 
     <Button
@@ -39,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:lab2_minViewsCount="5">
+            app:lab2_minViewsCount="4">
 
         </ru.tpu.lab2.Lab2ViewsContainer>
     </ScrollView>
@@ -51,5 +52,6 @@
         android:layout_below="@+id/edittext2"
         android:layout_marginTop="11dp"
         android:ems="10"
+        android:hint="Рейтинг"
         android:inputType="textPersonName" />
 </RelativeLayout>
