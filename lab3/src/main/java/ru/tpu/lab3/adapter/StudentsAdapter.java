@@ -1,11 +1,19 @@
 package ru.tpu.lab3.adapter;
 
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import ru.tpu.lab3.Student;
@@ -49,13 +57,22 @@ import ru.tpu.lab3.Student;
  * что с ним произошло, что позволяет делать анимированные изменения в списке. При этом RecyclerView
  * всё также будет работать с теми же закэшированными ViewHolder и не будет пересоздавать все View.
  */
-public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     public static final int TYPE_NUMBER = 0;
     public static final int TYPE_STUDENT = 1;
 
-    private List<Student> students = new ArrayList<>();
-
+    //private List<Student> students = new ArrayList<>();
+    private List<SpannableString> studentNames = new ArrayList<>();
+    private List<String> studentNameSearch;
+   /* public StudentsAdapter(List<Student> students) {
+        studentNames.clear();
+        for (Student student : students)
+        {
+            studentNames.add(student.lastName + " " + student.firstName + " " + student.secondName);
+        }
+        studentNameSearch.addAll(studentNames);
+    }*/
     @Override
     @NonNull
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -78,9 +95,12 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
             case TYPE_STUDENT:
                 StudentHolder studentHolder = (StudentHolder) holder;
-                Student student = students.get(position / 2);
+               // Student student = students.get(position / 2);
+                SpannableString studentName = studentNames.get(position / 2);
+               // studentNames.add(student.lastName + " " + student.firstName + " " + student.secondName);
                 studentHolder.student.setText(
-                        student.lastName + " " + student.firstName + " " + student.secondName
+                        //student.lastName + " " + student.firstName + " " + student.secondName
+                        studentName
                 );
                 break;
         }
@@ -88,7 +108,7 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return students.size() * 2;
+        return studentNames.size()*2;//students.size() * 2;
     }
 
     @Override
@@ -97,6 +117,67 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public void setStudents(List<Student> students) {
-        this.students = students;
+       // this.students = students;
+        studentNames = new ArrayList<>();
+        studentNameSearch = new ArrayList<>();
+        for (Student student : students)
+        {
+            String name = student.lastName + " " + student.firstName + " " + student.secondName;
+            studentNames.add(new SpannableString(name));
+            studentNameSearch.add(name);
+        }
+
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<SpannableString> filteredList = new ArrayList<>();
+
+            if (charSequence == null || charSequence.length() == 0) {
+                for (String s : studentNameSearch)
+                {
+                    filteredList.add(new SpannableString(s));
+                }
+
+            } else {
+                for (String name: studentNameSearch) {
+                    if (name.toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                        SpannableString coloredName = new SpannableString(name);
+                        int i = 0;
+                        int lendth = charSequence.toString().length();
+                        while (name.toLowerCase().contains(charSequence.toString().toLowerCase()))
+                        {
+                            int startIndx = name.toLowerCase().indexOf(charSequence.toString().toLowerCase());
+
+
+                            BackgroundColorSpan fcs = new BackgroundColorSpan(Color.YELLOW);
+                            coloredName.setSpan(fcs,startIndx + i, lendth+startIndx + i, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+
+                            name = name.toLowerCase().replaceFirst(charSequence.toString().toLowerCase(), "");
+                            i+=lendth;
+                        }
+                        filteredList.add(coloredName);
+
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            studentNames.clear();
+            studentNames.addAll((Collection<? extends SpannableString>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 }

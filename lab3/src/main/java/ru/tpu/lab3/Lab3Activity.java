@@ -3,9 +3,12 @@ package ru.tpu.lab3;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,6 +78,7 @@ public class Lab3Activity extends AppCompatActivity {
         студентов, подробнее о работе адаптера в документации к классу StudentsAdapter.
          */
         list.setAdapter(studentsAdapter = new StudentsAdapter());
+        studentsCache.addStudent(new Student("Elizaveta", "Repina", "Yur'evna"));
         studentsAdapter.setStudents(studentsCache.getStudents());
 
         /*
@@ -116,5 +120,24 @@ public class Lab3Activity extends AppCompatActivity {
             studentsAdapter.notifyItemRangeInserted(studentsAdapter.getItemCount() - 2, 2);
             list.scrollToPosition(studentsAdapter.getItemCount() - 1);
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.lab3_search_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                studentsAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }
