@@ -49,10 +49,10 @@ public class Lab2ViewsContainer extends LinearLayout {
     private int minViewsCount;
     private int viewsCount;
     private int CC=0;
-    private int prov1=0;
+
     private String PI;
     private String RI;
-    private int Rt;
+
     Map<Integer, Integer> states = new HashMap<Integer, Integer>();
     ArrayList<String> title = new ArrayList<String>();
     List<Double> reit = new ArrayList<Double>();
@@ -92,6 +92,7 @@ public class Lab2ViewsContainer extends LinearLayout {
         // Эта строчка объединяет возможные применённые к View стили
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Lab2ViewsContainer, defStyleAttr, 0);
 
+
         minViewsCount = a.getInt(R.styleable.Lab2ViewsContainer_lab2_minViewsCount, 0);
         if (minViewsCount < 0) {
             throw new IllegalArgumentException("minViewsCount can't be less than 0");
@@ -100,12 +101,13 @@ public class Lab2ViewsContainer extends LinearLayout {
         // Полученный TypedArray необходимо обязательно очистить.
         a.recycle();
         ArrayList<String> list11 = new ArrayList<String>();
-   if(viewsCount<minViewsCount)
+
+        if(viewsCount<minViewsCount)
    {
         for (int i = 0; i <  minViewsCount ; i++) {
             incrementViews("Показатель", 7.3);
         }
-          /*  list11.add("Показатель");
+            /*list11.add("Показатель");
            list11.add("7.8");*/
         }
 
@@ -118,55 +120,20 @@ title.clear();
         viewsCount++;
         PI =OOO;
         RI = PPP.toString();
-
-
-        //Rt= Integer.parseInt(RI) ;
-
         LinearLayout linearLayout1 = new LinearLayout(getContext());
         linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         linearLayout1.setId(CC++);
-
-
-/*// Зададим цвета для фона и самого индикатора
-        Drawable background = new ColorDrawable(0xFF373737);
-        Drawable progress = new ColorDrawable(0xFF00B51C);
-        ClipDrawable clipProgress = new ClipDrawable(progress, Gravity.LEFT,
-                ClipDrawable.HORIZONTAL);
-
-// Слои для индикатора
-        LayerDrawable layerlist = new LayerDrawable(new Drawable[] {
-                background, clipProgress });
-        layerlist.setId(0, android.R.id.background);
-        layerlist.setId(1, android.R.id.progress);*/
-
-        ProgressBar progressBar = new ProgressBar(getContext(), null,
-                android.R.attr.progressBarStyleHorizontal);
-
+        ProgressBar progressBar = new ProgressBar(getContext(), null, android.R.attr.progressBarStyleHorizontal);
         int tempI = (int) (PPP*10.0) ;
         states.put(linearLayout1.getId(), tempI);
-
-
         title.add(OOO);
         title.add(PPP.toString());
-
-
-        //SortedSet<Integer> values = new TreeSet<Integer>(states.values());
-       // states.entrySet().stream().sorted((n1,n2)->n1.getValue().compareTo(n2.getValue())).forEach(n->System.out.println(n));
-
-
-     /*   progressBar.setProgressDrawable(layerlist);*/
         progressBar.setProgressTintList(ColorStateList.valueOf(Color.BLACK));
         progressBar.setProgress(tempI);
-
-
-
         TextView textView1 = new TextView(getContext());
         textView1.setTextSize(16);
         textView1.setText(OOO);
-
-
-
         TextView textView3 = new TextView(getContext());
         textView3.setTextSize(16);
         textView3.setText(RI);
@@ -174,17 +141,12 @@ title.clear();
         LayoutParams poi2 = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,2.0f);
         LayoutParams poi3 = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,1.0f);
         poi3.leftMargin = 70;
-
         textView1.setLayoutParams(poi);
          progressBar.setLayoutParams(poi2);
         textView3.setLayoutParams(poi3);
-
         linearLayout1.addView(textView1);
         linearLayout1.addView(progressBar);
         linearLayout1.addView(textView3);
-
-
-
         addView(linearLayout1);
 
         List<Integer> mapValues = new ArrayList<Integer>(states.values());
@@ -212,9 +174,16 @@ title.clear();
 
     }
 
+ /*   @RequiresApi(api = Build.VERSION_CODES.N)
+    public void defView()
+    {
+        for (int i = 0; i <  minViewsCount ; i++) {
+            incrementViews("Показатель", 7.3);
+        }
 
+    }*/
 
-   /* @RequiresApi(api = Build.VERSION_CODES.N)
+  /*  @RequiresApi(api = Build.VERSION_CODES.N)
 
     public void setViewsCount(ArrayList <String> nnn) {
        int Vk = nnn.size()/2;
@@ -232,6 +201,8 @@ title.clear();
         }
     }
 */
+
+
     public ArrayList<String> getViewsCount() {
         return title;
     }

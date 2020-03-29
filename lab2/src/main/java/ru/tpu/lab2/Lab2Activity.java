@@ -40,22 +40,18 @@ public class Lab2Activity extends AppCompatActivity {
         // Тип вью, в которую происходит каст, не проверяется, поэтому если здесь указать View,
         // отличную от View в XML, то приложение крашнется на вызове этого метода.
         Button b = findViewById(R.id.btn_add_view);
+
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 lab2ViewsContainer = findViewById(R.id.container);
-                /*  PI = findViewById(R.id.edittext1) != null ? findViewById(R.id.edittext1).toString()  : "jjj";*/
+
                 PI = findViewById(R.id.edittext1);
                 String nnn  = PI.getText().length() == 0? "7.5": PI.getText().toString();
                 RI =findViewById(R.id.edittext2);
                 String mmm  = RI.getText().length() == 0? "Звук": RI.getText().toString();
                 Double mmm1 = Double.parseDouble(nnn);
-               /* if (nnn.length() == 0)
-                {nnn="ggggg";}
-                if (mmm.length() == 0)
-                {mmm="8";}*/
-               /* nnn = nnn != null ? nnn : "dddd";
-                mmm = mmm != null ? mmm : "7";*/
+
                lab2ViewsContainer.incrementViews(mmm,mmm1);
             }
         });
@@ -66,8 +62,6 @@ public class Lab2Activity extends AppCompatActivity {
         if (savedInstanceState != null) {
 
              lab2ViewsContainer = findViewById(R.id.container);
-            // lab2ViewsContainer.removeAllViews();
-           // lab2ViewsContainer.title.clear();
             ArrayList<String> nnn = savedInstanceState.getStringArrayList(STATE_VIEWS_COUNT);
             for (int i = 0; i < nnn.size(); i=i+2) {
                lab2ViewsContainer.incrementViews(nnn.get(i), Double.parseDouble(nnn.get(i+1)));

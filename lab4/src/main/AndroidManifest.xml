@@ -3,7 +3,8 @@
     package="ru.tpu.lab4">
 
     <application>
-        <activity android:name=".Lab4Activity"></activity>
+        <activity android:name=".add.AddStudentActivity"></activity>
+        <activity android:name=".Lab4Activity" />
     </application>
 
 </manifest>
