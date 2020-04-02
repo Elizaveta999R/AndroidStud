@@ -21,12 +21,14 @@ public class Lab2Activity extends AppCompatActivity {
         return new Intent(context, Lab2Activity.class);
     }
     private static final String STATE_VIEWS_COUNT = "views_count";
-    private EditText PI;
-    private EditText RI;
+    private EditText title;
+    private EditText score;
 
     private Lab2ViewsContainer lab2ViewsContainer;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,25 +36,20 @@ public class Lab2Activity extends AppCompatActivity {
         setContentView(R.layout.lab2_activity);
 
         setTitle(getString(R.string.lab2_title, getClass().getSimpleName()));
-
-        // findViewById - generic метод https://docs.oracle.com/javase/tutorial/extra/generics/methods.html,
-        // который автоматически кастит (class cast) View в указанный класс.
-        // Тип вью, в которую происходит каст, не проверяется, поэтому если здесь указать View,
-        // отличную от View в XML, то приложение крашнется на вызове этого метода.
+        lab2ViewsContainer = findViewById(R.id.container);
         Button b = findViewById(R.id.btn_add_view);
-
         b.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onClick(View view) {
-                lab2ViewsContainer = findViewById(R.id.container);
 
-                PI = findViewById(R.id.edittext1);
-                String nnn  = PI.getText().length() == 0? "7.5": PI.getText().toString();
-                RI =findViewById(R.id.edittext2);
-                String mmm  = RI.getText().length() == 0? "Звук": RI.getText().toString();
-                Double mmm1 = Double.parseDouble(nnn);
 
-               lab2ViewsContainer.incrementViews(mmm,mmm1);
+                title = findViewById(R.id.title);
+                String titleText  = title.getText().length() == 0? "7.5": title.getText().toString();
+                score =findViewById(R.id.score);
+                String scoreText  = score.getText().length() == 0? "Звук": score.getText().toString();
+
+               lab2ViewsContainer.incrementViews(titleText,scoreText);
             }
         });
 
@@ -61,20 +58,18 @@ public class Lab2Activity extends AppCompatActivity {
         // Восстанавливаем состояние нашего View, добавляя заново все View
         if (savedInstanceState != null) {
 
-             lab2ViewsContainer = findViewById(R.id.container);
-            ArrayList<String> nnn = savedInstanceState.getStringArrayList(STATE_VIEWS_COUNT);
-            for (int i = 0; i < nnn.size(); i=i+2) {
-               lab2ViewsContainer.incrementViews(nnn.get(i), Double.parseDouble(nnn.get(i+1)));
+            ArrayList<ProgressBar> pgList = savedInstanceState.getParcelableArrayList(STATE_VIEWS_COUNT);
+            for (int i = 0; i < pgList.size(); i++) {
+                ProgressBar pg = pgList.get(i);
+               lab2ViewsContainer.incrementViews(pg.title, pg.score);
             }
-
-            //lab2ViewsContainer.setViewsCount(nnn);
         }
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putStringArrayList(STATE_VIEWS_COUNT, lab2ViewsContainer.getViewsCount());
+        outState.putParcelableArrayList(STATE_VIEWS_COUNT, lab2ViewsContainer.getProgressBars());
     }
 }
 

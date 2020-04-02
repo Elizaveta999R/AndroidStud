@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lab4_title">Я %s!</string>
+    <string name="lab4_first_name">Имя</string>
+    <string name="lab4_second_name">Фамилия</string>
+    <string name="lab4_last_name">Отчество</string>
+
+    <string name="lab4_action_save">Сохранить</string>
+
+
+    <string name="lab4_error_empty_fields">Все поля должны быть заполнены</string>
+    <string name="lab4_error_already_exists">Такой студет уже есть</string>
+
+</resources>

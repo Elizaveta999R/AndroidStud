@@ -5,7 +5,17 @@ apply from: rootProject.file('feature.gradle')
 android.resourcePrefix 'lab5_'
 
 dependencies {
+
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+//добавлены новые зависимости
+    //для запросов к сети по протоколу http3
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    //для логирования запросов к сети
+    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
+    //это понятно)
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    //layout для обновления recyclerView протягиванием его вниз
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 }

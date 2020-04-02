@@ -1,66 +1,29 @@
 package ru.tpu.lab2;
+
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.drawable.ClipDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
-import android.os.Parcelable;
-import android.renderscript.Sampler;
 import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Button;
-import android.widget.EditText;
 
 
-import androidx.annotation.Px;
 import androidx.annotation.RequiresApi;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
-/**
- * Простейший пример самописного View. В данном случае мы просто наследуемся от LinearLayout-а и
- * добавляем свою логику, но также есть возможность отнаследоваться от {@link android.view.ViewGroup},
- * если необходимо реализовать контейнер для View полностью с нуля, либо отнаследоваться от {@link android.view.View}.
- * <p/>
- * Здесь можно было бы добавить автоматическое сохранение и восстановление состояния, переопределив методы
- * {@link #onSaveInstanceState()} и {@link #onRestoreInstanceState(Parcelable)}.
- */
-public class Lab2ViewsContainer extends LinearLayout {
+public class Lab2ViewsContainer extends RelativeLayout {
 
     private int minViewsCount;
     private int viewsCount;
-    private int CC=0;
+    private int layoutId = 1;
 
-    private String PI;
-    private String RI;
+    private static final int IDS_DIFFERENCE = 1000000;
 
-    Map<Integer, Integer> states = new HashMap<Integer, Integer>();
-    ArrayList<String> title = new ArrayList<String>();
-    List<Double> reit = new ArrayList<Double>();
+    ArrayList<ru.tpu.lab2.ProgressBar> pgList = new ArrayList<>();
 
-
- /*   List<LinearLayout> LLL= new ArrayList<LinearLayout>();
-    List<Double> ln= new ArrayList<Double>();
-    List<Integer> IdL = new ArrayList<Integer>();*/
 
     /**
      * Этот конструктор используется при создании View в коде.
@@ -78,20 +41,12 @@ public class Lab2ViewsContainer extends LinearLayout {
         this(context, attrs, 0);
     }
 
-    /**
-     * Конструктор, вызывается при инфлейте View, когда у View указан дополнительный стиль.
-     * Почитать про стили можно здесь https://developer.android.com/guide/topics/ui/look-and-feel/themes
-     *
-     * @param attrs атрибуты, указанные в XML. Стандартные android атрибуты обрабатываются внутри родительского класса.
-     *              Здесь необходимо только обработать наши атрибуты.
-     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Lab2ViewsContainer(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         // Свои атрибуты описываются в файле res/values/attrs.xml
         // Эта строчка объединяет возможные применённые к View стили
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Lab2ViewsContainer, defStyleAttr, 0);
-
 
         minViewsCount = a.getInt(R.styleable.Lab2ViewsContainer_lab2_minViewsCount, 0);
         if (minViewsCount < 0) {
@@ -100,123 +55,105 @@ public class Lab2ViewsContainer extends LinearLayout {
 
         // Полученный TypedArray необходимо обязательно очистить.
         a.recycle();
-        ArrayList<String> list11 = new ArrayList<String>();
 
-        if(viewsCount<minViewsCount)
-   {
-        for (int i = 0; i <  minViewsCount ; i++) {
-            incrementViews("Показатель", 7.3);
-        }
-            /*list11.add("Показатель");
-           list11.add("7.8");*/
-        }
-
-title.clear();
-       /* setViewsCount(list11);*/
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void incrementViews(String OOO, Double PPP) {
-        viewsCount++;
-        PI =OOO;
-        RI = PPP.toString();
-        LinearLayout linearLayout1 = new LinearLayout(getContext());
-        linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
-        linearLayout1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        linearLayout1.setId(CC++);
-        ProgressBar progressBar = new ProgressBar(getContext(), null, android.R.attr.progressBarStyleHorizontal);
-        int tempI = (int) (PPP*10.0) ;
-        states.put(linearLayout1.getId(), tempI);
-        title.add(OOO);
-        title.add(PPP.toString());
-        progressBar.setProgressTintList(ColorStateList.valueOf(Color.BLACK));
-        progressBar.setProgress(tempI);
-        TextView textView1 = new TextView(getContext());
-        textView1.setTextSize(16);
-        textView1.setText(OOO);
-        TextView textView3 = new TextView(getContext());
-        textView3.setTextSize(16);
-        textView3.setText(RI);
-        LayoutParams poi = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,2.0f);
-        LayoutParams poi2 = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,2.0f);
-        LayoutParams poi3 = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,1.0f);
-        poi3.leftMargin = 70;
-        textView1.setLayoutParams(poi);
-         progressBar.setLayoutParams(poi2);
-        textView3.setLayoutParams(poi3);
-        linearLayout1.addView(textView1);
-        linearLayout1.addView(progressBar);
-        linearLayout1.addView(textView3);
-        addView(linearLayout1);
-
-        List<Integer> mapValues = new ArrayList<Integer>(states.values());
-        Collections.sort(mapValues);
-        Collections.reverse(mapValues);
-
-        for(Integer element : mapValues) {
-            for (Map.Entry<Integer, Integer> entry :states.entrySet()) {
-              if (entry.getValue()==element)
-              {
-                  int uuu = entry.getKey();
-               LinearLayout nnn= findViewById(uuu);
-
-               removeView(findViewById(uuu));
-                  addView(nnn);
-
-              }
+        if (viewsCount < minViewsCount) {
+            for (int i = 0; i < minViewsCount; i++) {
+                incrementViews("Показатель", "7.3");
             }
         }
 
+    }
 
 
-// do stuff
+    public void incrementViews(String title, String score) {
+        if (viewsCount >= minViewsCount) {
+            ru.tpu.lab2.ProgressBar pg = new ru.tpu.lab2.ProgressBar(title, score);
+            pgList.add(pg);
+        }
 
+        viewsCount++;
+
+        LinearLayout progressLayout = new LinearLayout(getContext());
+        progressLayout.setOrientation(LinearLayout.HORIZONTAL);
+        progressLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        progressLayout.setId(layoutId);
+
+
+        ProgressBar progressBar = new ProgressBar(getContext(), null,
+                android.R.attr.progressBarStyleHorizontal);
+
+        int tempI = (int) (Double.parseDouble(score) * 10.0);
+
+
+        progressBar.setProgress(tempI);
+
+
+        TextView progressTitleView = new TextView(getContext());
+        progressTitleView.setTextSize(16);
+        progressTitleView.setText(title);
+
+
+        TextView progressScoreView = new TextView(getContext());
+        progressScoreView.setTextSize(16);
+        progressScoreView.setText(score);
+        progressScoreView.setId(layoutId + IDS_DIFFERENCE);
+        LinearLayout.LayoutParams titleLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 2.0f);
+        LinearLayout.LayoutParams progressBarLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 2.0f);
+        LinearLayout.LayoutParams ScoreLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1.0f);
+        ScoreLayoutParams.leftMargin = 70;
+
+        progressTitleView.setLayoutParams(titleLayoutParams);
+        progressBar.setLayoutParams(progressBarLayoutParams);
+        progressScoreView.setLayoutParams(ScoreLayoutParams);
+
+        progressLayout.addView(progressTitleView);
+        progressLayout.addView(progressBar);
+        progressLayout.addView(progressScoreView);
+
+        LayoutParams relativeParams = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        );
+
+        TextView lessScoreTexView = null;
+        TextView moreScoreTextView = null;
+        double currLessScoreValue = 0;
+        double currMoreScoreValue = 10;
+
+        Double scoreValue = Double.parseDouble(score);
+        for (int i = 1; i < layoutId; i++) {
+            TextView currScoreView = findViewById(i + IDS_DIFFERENCE);
+            CharSequence s = currScoreView.getText();
+            Double currScoreValue = Double.parseDouble(s.toString());
+            if (scoreValue > currScoreValue && currLessScoreValue < currScoreValue) {
+                currLessScoreValue = currScoreValue;
+                lessScoreTexView = currScoreView;
+            }
+            if (scoreValue <= currScoreValue && currMoreScoreValue >= currScoreValue) {
+                currMoreScoreValue = currScoreValue;
+                moreScoreTextView = currScoreView;
+            }
+        }
+        LayoutParams relativeParams2 = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+        );
+        if (moreScoreTextView != null)
+            relativeParams.addRule(RelativeLayout.BELOW, moreScoreTextView.getId() - IDS_DIFFERENCE);
+
+
+        addView(progressLayout, relativeParams);
+        if (lessScoreTexView != null) {
+            relativeParams2.addRule(RelativeLayout.BELOW, layoutId);
+            findViewById(lessScoreTexView.getId() - IDS_DIFFERENCE).setLayoutParams(relativeParams2);
+        }
+
+        layoutId++;
 
     }
 
- /*   @RequiresApi(api = Build.VERSION_CODES.N)
-    public void defView()
-    {
-        for (int i = 0; i <  minViewsCount ; i++) {
-            incrementViews("Показатель", 7.3);
-        }
-
-    }*/
-
-  /*  @RequiresApi(api = Build.VERSION_CODES.N)
-
-    public void setViewsCount(ArrayList <String> nnn) {
-       int Vk = nnn.size()/2;
-
-        if (this.viewsCount == Vk) {
-            return;
-        }
-    Vk = Vk < minViewsCount ? minViewsCount : Vk;
-
-        removeAllViews();
-        this.viewsCount = 0;
-
-        for (int i = 0; i < Vk*2; i=i+2) {
-            incrementViews(nnn.get(i), Double.parseDouble(nnn.get(i+1)));
-        }
-    }
-*/
-
-
-    public ArrayList<String> getViewsCount() {
-        return title;
-    }
-
-    /**
-     * Метод трансформирует указанные dp в пиксели, используя density экрана.
-     */
-    @Px
-    public int dpToPx(float dp) {
-        if (dp == 0) {
-            return 0;
-        }
-        float density = getResources().getDisplayMetrics().density;
-        return (int) Math.ceil(density * dp);
+    public ArrayList<ru.tpu.lab2.ProgressBar> getProgressBars() {
+        return pgList;
     }
 }
 

@@ -146,7 +146,6 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
 
             } else {
-
                 for (String name: studentNameSearch) {
                     if (name.toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         SpannableString coloredName = new SpannableString(name);

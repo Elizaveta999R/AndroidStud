@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lab3_action_save">Сохранить</string>
+    <string name="lab3_error_already_exists">Студент уже существует</string>
+    <string name="lab3_error_empty_fields">Ни одно поле не должно быть пустым</string>
+    <string name="lab3_first_name">Имя</string>
+    <string name="lab3_last_name">Отчество</string>
+    <string name="lab3_second_name">Фамилия</string>
+    <string name="lab3_title">Я %s!</string>
+</resources>

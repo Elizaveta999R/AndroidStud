@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.tpu.lab5">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application>
-        <activity android:name=".Lab5Activity"></activity>
+        <activity android:name=".ShowRepoActivity"></activity>
+        <activity android:name=".Lab5Activity" />
     </application>
 
 </manifest>

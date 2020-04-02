@@ -29,4 +29,12 @@ public interface StudentDao {
                     "last_name = :lastName"
     )
     int count(@NonNull String firstName, @NonNull String secondName, @NonNull String lastName);
+
+    @Query("SELECT * FROM student " +
+            "WHERE first_name LIKE :subString " +
+            "OR second_name LIKE :subString " +
+            "OR last_name LIKE :subString")
+    List<Student> getStudentsContainsString(@NonNull String subString);
+
+
 }

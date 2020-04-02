@@ -78,7 +78,7 @@ public class Lab3Activity extends AppCompatActivity {
         студентов, подробнее о работе адаптера в документации к классу StudentsAdapter.
          */
         list.setAdapter(studentsAdapter = new StudentsAdapter());
-        studentsCache.addStudent(new Student("Елизавета", "Репина", "Юрьевна"));
+        studentsCache.addStudent(new Student("Elizaveta", "Repina", "Yur'evna"));
         studentsAdapter.setStudents(studentsCache.getStudents());
 
         /*

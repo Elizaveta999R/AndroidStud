@@ -1,16 +1,17 @@
 package ru.tpu.lab4;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -20,21 +21,6 @@ import ru.tpu.lab4.db.Lab4Database;
 import ru.tpu.lab4.db.Student;
 import ru.tpu.lab4.db.StudentDao;
 
-
-/**
- * <b>Взаимодействие с файловой системой, SQLite</b>
- * <p>
- * В лабораторной работе вместо сохранения студентов в оперативную память будем сохранять их в
- * базу данных SQLite, которая интегрирована в ОС Android. Для более удобного взаимодействия с
- * ней будем использовать ORM библиотеку Room (подключение см. в build.gradle).
- * </p>
- * <p>
- * В {@link} введенные поля теперь сохраняются в
- * {@link android.content.SharedPreferences} - удобный способ для хранения небольших данных в
- * файловой системе, а также напрямую поработаем с {@link java.io.File} для работы с фото,
- * полученного с камеры.
- * </p>
- */
 public class Lab4Activity extends AppCompatActivity {
 
     private static final int REQUEST_STUDENT_ADD = 1;
@@ -54,9 +40,6 @@ public class Lab4Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
-        Получаем объект для выполнения запросов к БД. См. Lab4Database.
-         */
         studentDao = Lab4Database.getInstance(this).studentDao();
 
         setTitle(getString(R.string.lab4_title, getClass().getSimpleName()));
@@ -107,11 +90,12 @@ public class Lab4Activity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                studentsAdapter.setDao(studentDao);
                 studentsAdapter.getFilter().filter(newText);
+
                 return false;
             }
         });
         return super.onCreateOptionsMenu(menu);
     }
-
 }

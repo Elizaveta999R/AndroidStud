@@ -1,38 +1,22 @@
 package ru.tpu.lab4.add;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-
-import java.io.File;
-import java.io.IOException;
-
-import ru.tpu.lab4.Const;
 import ru.tpu.lab4.R;
 import ru.tpu.lab4.db.Lab4Database;
 import ru.tpu.lab4.db.Student;
 import ru.tpu.lab4.db.StudentDao;
 
-/**
- * Аналогичный экран ввода информации о студенте, как и в lab3. Но теперь введенная информация
- * сохраняется в {@link android.content.SharedPreferences} (см {@link TempStudentPref}), что
- * позволяет восстановить введенную информацию после ухода и возвращения на экран. Также теперь
- * можно добавить фотографию через приложение камеры. Для работы с картинками см
- * {@link }.
- */
 public class AddStudentActivity extends AppCompatActivity {
 
     private static final String EXTRA_STUDENT = "student";
