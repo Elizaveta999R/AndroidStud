@@ -52,9 +52,9 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 StudentHolder studentHolder = (StudentHolder) holder;
                 // Student student = students.get(position / 2);
                 SpannableString studentName = studentNames.get(position / 2);
-                // studentNames.add(student.lastName + " " + student.firstName + " " + student.secondName);
+                // studentNames.add(student.lastName_fts + " " + student.firstName + " " + student.secondName_fts);
                 studentHolder.student.setText(
-                        //student.lastName + " " + student.firstName + " " + student.secondName
+                        //student.lastName_fts + " " + student.firstName + " " + student.secondName_fts
                         studentName
                 );
                 break;
@@ -96,7 +96,7 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<SpannableString> filteredList = new ArrayList<>();
-            List<Student> filteredStudents = studentDao.getStudentsContainsString('%' + charSequence.toString() + '%');
+            List<Student> filteredStudents = studentDao.getStudentsContainsString("*" + charSequence.toString() + "*");
 
             if (charSequence == null || charSequence.length() == 0) {
                 for (Student student : filteredStudents) {

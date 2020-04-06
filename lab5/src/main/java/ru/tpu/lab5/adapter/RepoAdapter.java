@@ -37,31 +37,26 @@ public class RepoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Repo repo = repos.get(position);
         repoHolder.repo.setText(repo.fullName);
         repoHolder.description.setText(repo.description);
-        //отследивание щелчка на RepoHolder
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                               @Override
-                                               public void onClick(View view) {
-                                                    //По щелчку переходим в новое активити ShowRepoActivity
-                                                   Intent intent = new Intent(view.getContext(), ShowRepoActivity.class);
-                                                   //Передаем данные о репозитории в активити с ключом Repo
-                                                   intent.putExtra("Repo", repo);
-                                                   view.getContext().startActivity(intent);
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ShowRepoActivity.class);
+                intent.putExtra("Repo", repo);
+                view.getContext().startActivity(intent);
 
-                                               }
-                                           }
-
-        );
-    }
+            }
+        });
+}
 
     @Override
     public int getItemCount() {
         return repos.size();
     }
 
-    public List<Repo> getItems(){
+    public List<Repo> getItems() {
         return repos;
     }
-
 
 
 }

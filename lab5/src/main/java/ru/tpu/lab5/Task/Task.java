@@ -21,12 +21,11 @@ public abstract class Task<T> implements Runnable {
     }
 
 
-//Поток стартовал
     @Override
     public final void run() {
 
         Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-//Передаем в главный поток данные
+
         mainHandler.post(new Runnable() {
 
             @Override
@@ -34,9 +33,6 @@ public abstract class Task<T> implements Runnable {
             public void run() {
 
                 if (observer != null) {
-//Здесь передаются данные в метод onLoading интерфейса Observer,
-// а получаем данные через этот интерфейс в главном потоке в Lab5Activity
-// searchObserver метод onLoading
                     observer.onLoading(Task.this);
 
                 }
@@ -46,8 +42,6 @@ public abstract class Task<T> implements Runnable {
         });
 
         try {
-//Пытаемся получить данные с помощью функции executeInBackground()
-            //Реализация этой функции находится в SearchTask
             final T data = executeInBackground();
 
             mainHandler.post(new Runnable() {
@@ -57,9 +51,6 @@ public abstract class Task<T> implements Runnable {
                 public void run() {
 
                     if (observer != null) {
-//Здесь передаются данные в метод onSuccess интерфейса Observer,
-// а получаем данные через этот интерфейс в главном потоке в Lab5Activity
-// searchObserver метод onSuccess
                         observer.onSuccess(Task.this, data);
 
                     }
@@ -67,7 +58,6 @@ public abstract class Task<T> implements Runnable {
                 }
 
             });
-//Отслеживаем ошибку и передаем её в метод onError
         } catch (final Exception e) {
 
             mainHandler.post(new Runnable() {

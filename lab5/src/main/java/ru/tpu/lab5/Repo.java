@@ -5,11 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.List;
-//делаем класс наследником от Parcelable
-// для того, чтобы была возможность передачи объектов класса между активити
-// и для осуществления сохранения состояний
-//Parcelable преобразует все объекты в последовательность битов,
-// поэтому с помощью него лекго передавать что угодно
+
 public class Repo implements Parcelable{
 
     public String fullName;

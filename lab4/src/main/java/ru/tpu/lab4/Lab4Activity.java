@@ -51,7 +51,6 @@ public class Lab4Activity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         list.setLayoutManager(layoutManager);
 
-        // Точно такой же список, как и в lab3, но с добавленным выводом фото
         list.setAdapter(studentsAdapter = new StudentsAdapter());
         studentsAdapter.setStudents(studentDao.getAll());
 

@@ -7,16 +7,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = Student.class, version = 1, exportSchema = false)
+@Database(entities = {Student.class, StudentFTS.class}, version = 1, exportSchema = false)
 public abstract class Lab4Database extends RoomDatabase {
 
     private static Lab4Database db;
 
-    /**
-     * Синглетон, в котором происходит инициализация и настройка самой БД. Используем синглетон,
-     * т.к. инстанс класса БД должен быть только один (т.ё. в нём происходит управление
-     * соединением к БД).
-     */
+
     @NonNull
     public static Lab4Database getInstance(@NonNull Context context) {
         if (db == null) {

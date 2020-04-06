@@ -30,11 +30,7 @@ public interface StudentDao {
     )
     int count(@NonNull String firstName, @NonNull String secondName, @NonNull String lastName);
 
-    @Query("SELECT * FROM student " +
-            "WHERE first_name LIKE :subString " +
-            "OR second_name LIKE :subString " +
-            "OR last_name LIKE :subString")
+    @Query("SELECT * FROM studentfts INNER JOIN student ON id = docid " +
+            "WHERE studentfts MATCH :subString ")
     List<Student> getStudentsContainsString(@NonNull String subString);
-
-
 }
